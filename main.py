@@ -4,10 +4,9 @@ import logging
 import sys
 from dotenv import load_dotenv
 
-from aiogram import Bot, Dispatcher, html
+from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from aiogram.filters import CommandStart
 from aiogram.types import Message
 
 load_dotenv()
@@ -15,11 +14,6 @@ load_dotenv()
 TOKEN = os.getenv("SECRET_KEY")
 
 dp = Dispatcher()
-
-
-@dp.message(CommandStart())
-async def command_start_handler(message: Message) -> None:
-    await message.answer(f"Hello, {html.bold(message.from_user.full_name)}!")
 
 
 @dp.business_message()
