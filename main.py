@@ -37,7 +37,6 @@ async def deleted_business_handler(message: types.BusinessMessagesDeleted) -> No
 
 async def main() -> None:
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-
     await dp.start_polling(bot)
 
 
