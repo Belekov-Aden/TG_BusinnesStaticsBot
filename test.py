@@ -13,8 +13,10 @@ client = OpenAI(api_key=KEY)
 completion = client.chat.completions.create(
     model="gpt-4o-mini",
     messages=[
-        {"role": "system",
-         "content": "На любой запрос говори: 'Мяу'"},
+        {
+            "role": "system",
+            "content": "На любой запрос говори: 'Мяу'"
+        },
         {
             "role": "user",
             "content": "Привет как дела?"
