@@ -1,4 +1,5 @@
 import asyncio
+import json
 import os
 import logging
 import sys
@@ -19,6 +20,7 @@ load_dotenv()
 
 TOKEN = os.getenv("SECRET_KEY")
 KEY = os.getenv("OPENAI_KEY")
+JSON_FILE = "data.json"
 
 dp = Dispatcher(storage=MemoryStorage())
 
@@ -32,9 +34,42 @@ class ChatGPTStates(StatesGroup):
 # TODO: Придумать куда хранить сообщение, у каждого пользователя свое хранение там есть: MESSAGE, EDITED, DELETED,
 # После придумать у бота возможность введение статистики в чатах
 
+async def save_message_to_json(message: types.Message):
+    """Записывает сообщение в JSON, сохраняя историю переписки."""
+    with open(JSON_FILE, "r", encoding="utf-8") as file:
+        data = json.load(file)
+
+    # TODO: Реализовать возможность т.к пользователь один, в json нужно сделать функцию получение имени бота
+    chat_username = message.chat.username
+    sender_username = message.from_user.username
+    text = message.text
+
+    # If symbol_ "+" is admin bot gets message
+    if sender_username == 'adenchikio':
+        symbol_ = "-"
+    else:
+        symbol_ = "+"
+        # Если пишет другой человек, то получатель – ты
+
+    message_entry = {
+        "symbol": symbol_,
+        "text": text
+    }
+
+    for chat in data["chats"]:
+        if chat["chat"] == chat_username:
+            chat.setdefault("messages", []).append(message_entry)
+            break
+    else:
+        data["chats"].append({"chat": chat_username, "messages": [message_entry]})
+
+    with open(JSON_FILE, "w", encoding="utf-8") as file:
+        json.dump(data, file, ensure_ascii=False, indent=4)
+
+
 @dp.business_message()
 async def message_business_handler(message: types.Message) -> None:
-    print(f'MESSAGE: {message.from_user.username}\nText: {message.text}')
+    await save_message_to_json(message)
 
 
 @dp.edited_business_message()
