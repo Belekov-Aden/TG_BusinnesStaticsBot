@@ -48,34 +48,34 @@ async def deleted_business_handler(message: types.BusinessMessagesDeleted) -> No
     ...
 
 
-@dp.message(Command("query"))
-async def query_chat_gpt(message: types.Message, state: FSMContext):
-    await message.answer('Введите запрос: ', reply_markup=types.ReplyKeyboardRemove())
-    await state.set_state(ChatGPTStates.waiting_for_query)
-
-
-@dp.message(ChatGPTStates.waiting_for_query)
-async def response_chat_gpt_for_command(message: types.Message, state: FSMContext):
-    user_query = message.text
-
-    completion = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": "Личный ассистент, помогай по всему вопросу, правда и честно!"
-            },
-            {
-                "role": "user",
-                "content": user_query
-            }
-        ]
-    )
-
-    response = completion.choices[0].message.content
-
-    await message.answer(response)
-    await state.clear()
+# @dp.message(Command("query"))
+# async def query_chat_gpt(message: types.Message, state: FSMContext):
+#     await message.answer('Введите запрос: ', reply_markup=types.ReplyKeyboardRemove())
+#     await state.set_state(ChatGPTStates.waiting_for_query)
+#
+#
+# @dp.message(ChatGPTStates.waiting_for_query)
+# async def response_chat_gpt_for_command(message: types.Message, state: FSMContext):
+#     user_query = message.text
+#
+#     completion = client.chat.completions.create(
+#         model="gpt-4o-mini",
+#         messages=[
+#             {
+#                 "role": "system",
+#                 "content": "Личный ассистент, помогай по всему вопросу, правда и честно!"
+#             },
+#             {
+#                 "role": "user",
+#                 "content": user_query
+#             }
+#         ]
+#     )
+#
+#     response = completion.choices[0].message.content
+#
+#     await message.answer(response)
+#     await state.clear()
 
 
 async def main() -> None:
