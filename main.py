@@ -48,6 +48,7 @@ async def deleted_business_handler(message: types.BusinessMessagesDeleted) -> No
     ...
 
 
+# TODO: После реализации сохранении переписок с каждого чата за опр срок, сделать возможным анализ переписок с помощью ИИ
 # @dp.message(Command("query"))
 # async def query_chat_gpt(message: types.Message, state: FSMContext):
 #     await message.answer('Введите запрос: ', reply_markup=types.ReplyKeyboardRemove())
