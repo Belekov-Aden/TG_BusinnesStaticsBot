@@ -45,7 +45,7 @@ async def message_business_handler(message: types.Message) -> None:
     message_date: datetime = message.date
 
     formatted_date = message_date.strftime("%Y-%m-%d %H:%M:%S")
-    Messages.create(id_=message.message_id, data=formatted_date, from_=message.from_user.username, to_=message.chat.username, message=message.text)
+    Messages.create(id_=message.message_id, data=formatted_date, from_=message.from_user.username, to_=message.chat.username, message=message.text, status=Messages.MessageStatus.SEND)
 
 
 @dp.edited_business_message()
