@@ -50,6 +50,7 @@ async def message_business_handler(message: types.Message) -> None:
 
 @dp.edited_business_message()
 async def edited_business_handler(message: types.Message) -> None:
+
     print(f'EDITED: {message.from_user.username}\nText: {message.text}')
 
 
