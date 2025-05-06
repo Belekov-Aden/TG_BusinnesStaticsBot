@@ -29,6 +29,7 @@ JSON_FILE = "data.json"
 
 dp = Dispatcher(storage=MemoryStorage())
 
+
 # client = OpenAI(api_key=KEY)
 
 
@@ -43,14 +44,16 @@ class ChatGPTStates(StatesGroup):
 @dp.business_message()
 async def message_business_handler(message: types.Message) -> None:
     message_date: datetime = message.date
-
     formatted_date = message_date.strftime("%Y-%m-%d %H:%M:%S")
-    Messages.create(id_=message.message_id, data=formatted_date, from_=message.from_user.username, to_=message.chat.username, message=message.text, status=Messages.MessageStatus.SEND)
+
+    type
+
+    Messages.create(id_=message.message_id, data=formatted_date, from_=message.from_user.username,
+                    to_=message.chat.username, message=message.text, status=Messages.MessageStatus.SEND, type=...)
 
 
 @dp.edited_business_message()
 async def edited_business_handler(message: types.Message) -> None:
-
     print(f'EDITED: {message.from_user.username}\nText: {message.text}')
 
 

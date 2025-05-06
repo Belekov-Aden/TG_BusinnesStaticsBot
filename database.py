@@ -15,7 +15,7 @@ class Messages(Model):
     to_ = CharField(max_length=255)
     data = DateTimeField()
     message = TextField()
-    type = CharField()
+    type_ = CharField()
     status = CharField(choices=[(role.value, role.name) for role in MessageStatus])
 
     class Meta:
